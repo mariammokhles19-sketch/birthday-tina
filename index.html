@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Happy Birthday Tina ❤️ | عيد ميلاد سعيد تينا</title>
+    
+    <!-- خطوط عربية وأجنبية راقية من Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Dancing+Script:wght@700&family=Tajawal:wght@400;500;700;900&family=Great+Vibes&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS لتنسيق العناصر بمرونة -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- FontAwesome للأيقونات -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary-pink: #ff758c;
+            --secondary-purple: #ff7eb3;
+            --deep-purple: #1a0633;
+            --accent-glow: #e255a1;
+            --glass-bg: rgba(255, 255, 255, 0.12);
+            --glass-border: rgba(255, 255, 255, 0.25);
+            --glass-shadow: 0 10px 40px 0 rgba(31, 38, 135, 0.4);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+            -webkit-user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Tajawal', 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #0d021a 0%, #24083a 35%, #4a104b 70%, #7c1a58 100%);
+            min-height: 100vh;
+            color: #ffffff;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* خلفيات النجوم والضوء */
+        #stars-canvas, #glow-canvas, #confetti-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        #stars-canvas { z-index: 0; }
+        #glow-canvas { z-index: 1; }
+        #confetti-canvas { z-index: 50; }
+
+        /* تأثير Glassmorphism الفاخر */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 28px;
+            box-shadow: var(--glass-shadow);
+            position: relative;
+            z-index: 10;
+        }
+
+        .glass-btn {
+            background: linear-gradient(135deg, rgba(255, 117, 140, 0.85), rgba(255, 126, 179, 0.85));
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 6px 20px rgba(255, 117, 140, 0.4);
+            transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .glass-btn:hover {
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 10px 30px rgba(255, 117, 140, 0.7);
+            background: linear-gradient(135deg, rgba(255, 117, 140, 1), rgba(255, 126, 179, 1));
+        }
+
+        .glass-btn:active {
+            transform: translateY(1px) scale(0.97);
+        }
+
+        /* اهتزاز خطأ الباسورد مع توهج أحمر */
+        @keyframes errorShake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-12px); }
+            40%, 80% { transform: translateX(12px); }
+        }
+
+        .shake-error {
+            animation: errorShake 0.45s ease-in-out;
+            border-color: #ff3366 !important;
+            box-shadow: 0 0 20px rgba(255, 51, 102, 0.8) !important;
+        }
+
+        /* تأثير القلوب الطافية باستمرار في الخلفية */
+        .floating-heart-bg {
+            position: fixed;
+            pointer-events: none;
+            z-index: 2;
+            animation: floatUp 9s linear infinite;
+            opacity: 0.7;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(105vh) rotate(0deg) scale(0.5);
+                opacity: 0;
+            }
+            15% { opacity: 0.8; }
+            85% { opacity: 0.8; }
+            100% {
+                transform: translateY(-10vh) rotate(360deg) scale(1.3);
+                opacity: 0;
+            }
+        }
+
+        /* تأثير القلوب النابتة عند النقر في أي مكان */
+        .click-heart {
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            font-size: 24px;
+            animation: clickHeartAnim 1.2s cubic-bezier(0.215, 0.61, 0.355, 1) forwards;
+        }
+
+        @keyframes clickHeartAnim {
+            0% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(0.4) rotate(0deg);
+            }
+            50% {
+                opacity: 0.9;
+                transform: translate(-50%, -80px) scale(1.3) rotate(15deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(-50%, -150px) scale(0.7) rotate(-20deg);
+            }
+        }
+
+        /* Ken Burns Effect (حركة زوم وتحريك بطيء جداً للصور داخل الكادر) */
+        @keyframes kenBurns1 {
+            0% { transform: scale(1) translate(0, 0); }
+            50% { transform: scale(1.12) translate(-2%, -2%); }
+            100% { transform: scale(1.05) translate(1%, 1%); }
+        }
+        @keyframes kenBurns2 {
+            0% { transform: scale(1.1) translate(2%, 1%); }
+            50% { transform: scale(1.02) translate(-1%, -2%); }
+            100% { transform: scale(1.15) translate(0, 0); }
+        }
+        @keyframes kenBurns3 {
+            0% { transform: scale(1.05) translate(-1%, 2%); }
+            50% { transform: scale(1.15) translate(2%, -1%); }
+            100% { transform: scale(1) translate(0, 0); }
+        }
+
+        .ken-burns-1 { animation: kenBurns1 12s ease-in-out infinite alternate; }
+        .ken-burns-2 { animation: kenBurns2 12s ease-in-out infinite alternate; }
+        .ken-burns-3 { animation: kenBurns3 12s ease-in-out infinite alternate; }
+
+        /* انميشن التناقل المتنوعة بين الذكريات مع Blur بسيط */
+        .anim-slide-left { animation: slideLeftIn 0.85s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+        .anim-slide-right { animation: slideRightIn 0.85s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+        .anim-slide-up { animation: slideUpIn 0.85s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+        .anim-slide-down { animation: slideDownIn 0.85s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+        .anim-zoom-in { animation: zoomInAnim 0.85s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+        .anim-zoom-out { animation: zoomOutAnim 0.85s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+        .anim-fade { animation: fadeInAnim 0.85s ease-out forwards; }
+        .anim-rotate { animation: rotateInAnim 0.85s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+        .anim-scale { animation: scaleInAnim 0.85s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+        .anim-float { animation: floatInAnim 0.85s ease-out forwards; }
+        .anim-bounce { animation: bounceInAnim 0.85s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+
+        @keyframes slideLeftIn {
+            from { opacity: 0; filter: blur(8px); transform: translateX(80px) scale(0.95); }
+            to { opacity: 1; filter: blur(0); transform: translateX(0) scale(1); }
+        }
+        @keyframes slideRightIn {
+            from { opacity: 0; filter: blur(8px); transform: translateX(-80px) scale(0.95); }
+            to { opacity: 1; filter: blur(0); transform: translateX(0) scale(1); }
+        }
+        @keyframes slideUpIn {
+            from { opacity: 0; filter: blur(8px); transform: translateY(80px) scale(0.95); }
+            to { opacity: 1; filter: blur(0); transform: translateY(0) scale(1); }
+        }
+        @keyframes slideDownIn {
+            from { opacity: 0; filter: blur(8px); transform: translateY(-80px) scale(0.95); }
+            to { opacity: 1; filter: blur(0); transform: translateY(0) scale(1); }
+        }
+        @keyframes zoomInAnim {
+            from { opacity: 0; filter: blur(10px); transform: scale(0.6); }
+            to { opacity: 1; filter: blur(0); transform: scale(1); }
+        }
+        @keyframes zoomOutAnim {
+            from { opacity: 0; filter: blur(10px); transform: scale(1.3); }
+            to { opacity: 1; filter: blur(0); transform: scale(1); }
+        }
+        @keyframes fadeInAnim {
+            from { opacity: 0; filter: blur(12px); }
+            to { opacity: 1; filter: blur(0); }
+        }
+        @keyframes rotateInAnim {
+            from { opacity: 0; filter: blur(6px); transform: rotate(-12deg) scale(0.8); }
+            to { opacity: 1; filter: blur(0); transform: rotate(0) scale(1); }
+        }
+        @keyframes scaleInAnim {
+            from { opacity: 0; filter: blur(8px); transform: scale(0.3); }
+            to { opacity: 1; filter: blur(0); transform: scale(1); }
+        }
+        @keyframes floatInAnim {
+            from { opacity: 0; filter: blur(6px); transform: translateY(50px) rotate(3deg); }
+            to { opacity: 1; filter: blur(0); transform: translateY(0) rotate(0); }
+        }
+        @keyframes bounceInAnim {
+            0% { opacity: 0; filter: blur(8px); transform: scale(0.5); }
+            70% { opacity: 1; filter: blur(0); transform: scale(1.08); }
+            100% { opacity: 1; filter: blur(0); transform: scale(1); }
+        }
+
+        /* مؤشر الكتابة للرسالة */
+        .typing-cursor::after {
+            content: '|';
+            animation: blinkCursor 0.8s infinite;
+            color: var(--primary-pink);
+            font-weight: bold;
+        }
+        @keyframes blinkCursor {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* نبض الزر الرئيسي */
+        .pulse-heart-btn {
+            animation: pulseGlow 2s infinite;
+        }
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 0 0 rgba(255, 117, 140, 0.8); }
+            70% { box-shadow: 0 0 0 22px rgba(255, 117, 140, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 117, 140, 0); }
+        }
+
+        /* حروف اسم تينا المضيئة بالنيون */
+        .neon-tina {
+            font-family: 'Great Vibes', 'Dancing Script', cursive;
+            color: #fff;
+            text-shadow: 
+                0 0 7px #fff,
+                0 0 10px #fff,
+                0 0 21px #fff,
+                0 0 42px #ff1493,
+                0 0 82px #ff1493,
+                0 0 92px #ff1493;
+            animation: neonGlow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes neonGlow {
+            from {
+                text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px #ff1493, 0 0 40px #ff1493;
+            }
+            to {
+                text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 35px #ff1493, 0 0 65px #ff1493, 0 0 95px #ff1493;
+            }
+        }
+
+        /* تخصيص شريط التمرير */
+        .custom-scrollbar::-webkit-scrollbar { width: 5px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.05); }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255, 117, 140, 0.5); border-radius: 10px; }
+
+        /* دائرة Progress للفيديو */
+        .video-progress-ring circle {
+            transition: stroke-dashoffset 0.15s linear;
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-3 sm:p-6 overflow-x-hidden">
+
+    <!-- كائنات خلفية النجوم والضوء والكونفيتي -->
+    <canvas id="stars-canvas"></canvas>
+    <canvas id="glow-canvas"></canvas>
+    <canvas id="confetti-canvas"></canvas>
+
+    <!-- مشغل الموسيقى الخلفية مع التعامل مع أخطاء التحميل وعدم وجود الملف المحلي -->
+    <audio id="bg-music" loop preload="auto">
+        <source src="music/song.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- مشغل موسيقى عائم متجاوب للتحكم -->
+    <div id="music-control" class="fixed top-4 right-4 z-40 hidden">
+        <button id="music-toggle-btn" class="glass-card w-12 h-12 rounded-full flex items-center justify-center text-pink-300 hover:text-white transition-all shadow-xl active:scale-90 border border-white/30">
+            <i class="fas fa-music animate-spin" style="animation-duration: 4s;"></i>
+        </button>
+    </div>
+
+    <!-- الحاوية الرئيسية الواجهة -->
+    <main class="w-full max-w-2xl z-10 my-auto">
+
+        <!-- 1. شاشة التحميل (Loading Screen) -->
+        <section id="loading-screen" class="glass-card p-8 sm:p-12 text-center flex flex-col items-center justify-center min-h-[380px] transition-all duration-700">
+            <div class="relative w-28 h-28 mb-6 flex items-center justify-center">
+                <!-- شريط تحميل دائري مضيء -->
+                <div class="absolute inset-0 rounded-full border-4 border-pink-400/20 border-t-pink-500 animate-spin"></div>
+                <i class="fas fa-heart text-5xl text-pink-400 animate-pulse"></i>
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-white mb-2 tracking-wide">جاري إعداد المفاجأة... ❤️</h2>
+            <p class="text-pink-200 text-sm sm:text-base font-medium">لحظات صغيرة لأجمل وأغلى صديقة "تينا"</p>
+        </section>
+
+        <!-- 2. شاشة كلمة السر (Password Screen) -->
+        <section id="password-screen" class="glass-card p-8 sm:p-12 text-center hidden transition-all duration-700">
+            <div class="w-20 h-20 mx-auto mb-6 rounded-2xl bg-gradient-to-tr from-pink-500/30 to-purple-500/30 border border-pink-300/40 flex items-center justify-center shadow-lg backdrop-blur-md">
+                <i class="fas fa-lock-keyhole text-3xl text-pink-300"></i>
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-black mb-3 text-transparent bg-clip-text bg-gradient-to-r from-pink-200 via-pink-300 to-purple-200">
+                مفاجأة خاصة جداً ✨
+            </h2>
+            <p class="text-pink-100/90 text-sm sm:text-base mb-6 font-normal">أدخلي كلمة السر لفتح صندوق الذكريات الخاص بـ تينا 💌</p>
+
+            <form id="password-form" onsubmit="event.preventDefault(); checkPassword();" class="space-y-4">
+                <div class="relative max-w-xs mx-auto">
+                    <input type="password" id="password-input" maxlength="12" placeholder="أدخلي كلمة السر..." 
+                        class="w-full px-5 py-3.5 text-center text-xl font-bold tracking-widest text-white bg-black/40 border border-pink-300/40 rounded-xl focus:outline-none focus:border-pink-400 focus:ring-2 focus:ring-pink-400/50 transition-all placeholder:font-normal placeholder:tracking-normal placeholder:text-gray-400 placeholder:text-sm">
+                </div>
+                
+                <div class="h-6 flex items-center justify-center">
+                    <p id="password-error" class="text-red-400 text-xs sm:text-sm font-semibold opacity-0 transition-all duration-300"></p>
+                </div>
+
+                <button type="submit" class="glass-btn px-8 py-3.5 rounded-xl font-bold text-white text-base w-full max-w-xs shadow-lg flex items-center justify-center space-x-2 space-x-reverse mx-auto">
+                    <span>فتح المفاجأة</span>
+                    <i class="fas fa-key text-sm"></i>
+                </button>
+            </form>
+        </section>
+
+        <!-- 3. شاشة الرسالة الأولى بتأثير الكتابة الحرفية (Typing Effect) -->
+        <section id="letter-screen" class="glass-card p-6 sm:p-10 hidden transition-all duration-700">
+            <div class="flex items-center space-x-3 space-x-reverse mb-6 border-b border-pink-300/20 pb-4">
+                <div class="w-12 h-12 rounded-full bg-pink-500/30 border border-pink-300/40 flex items-center justify-center text-pink-300 shadow-inner">
+                    <i class="fas fa-envelope-open-text text-2xl"></i>
+                </div>
+                <div>
+                    <h3 class="font-bold text-lg sm:text-xl text-white">رسالة إلى الغالية تينا 💖</h3>
+                    <p class="text-xs sm:text-sm text-pink-200/80">من القلب إلى القلب...</p>
+                </div>
+            </div>
+
+            <!-- حاوية النص المكتوب بتأثير الكتابة الحرفية -->
+            <div id="typing-container" class="text-base sm:text-lg text-gray-100 leading-relaxed font-normal min-h-[190px] sm:min-h-[230px] max-h-[360px] overflow-y-auto custom-scrollbar p-2">
+                <p id="typing-text" class="typing-cursor whitespace-pre-line text-right"></p>
+            </div>
+
+            <!-- الزر الكبير الذي يظهر فور انتهاء الكتابة -->
+            <div id="letter-btn-container" class="mt-8 text-center hidden">
+                <button onclick="startMemoriesJourney()" class="glass-btn pulse-heart-btn px-8 py-4 rounded-2xl font-black text-lg text-white shadow-2xl hover:scale-105 transition-all flex items-center justify-center space-x-3 space-x-reverse mx-auto">
+                    <span>💌 اضغطي هنا</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- 4. شاشة معرض الذكريات الاحترافي (34 عنصرًا) -->
+        <section id="gallery-screen" class="glass-card p-4 sm:p-8 hidden transition-all duration-700">
+            <!-- شريط رأس المعرض والعداد -->
+            <div class="flex items-center justify-between mb-4 border-b border-white/10 pb-3 px-1">
+                <div class="flex items-center space-x-2 space-x-reverse">
+                    <i class="fas fa-sparkles text-yellow-300 animate-spin" style="animation-duration: 5s;"></i>
+                    <span class="font-bold text-sm sm:text-base text-pink-200">شريط الذكريات</span>
+                </div>
+                
+                <!-- العداد: X / 34 -->
+                <div class="bg-black/50 px-3.5 py-1 rounded-full border border-pink-400/30 text-xs sm:text-sm font-black text-pink-300 tracking-wider">
+                    <span id="current-index">1</span> / <span id="total-count">34</span>
+                </div>
+            </div>
+
+            <!-- كادر عرض الصور والفيديوهات الأفقية مع Ken Burns وتنقلات الأنيميشن -->
+            <div id="media-viewport" class="relative w-full aspect-[4/3] sm:aspect-[16/10] bg-black/60 rounded-2xl overflow-hidden border border-white/20 shadow-2xl flex items-center justify-center">
+                
+                <!-- العنصر النشط يتم حسابه ديناميكياً بواسطة JavaScript -->
+                <div id="media-container" class="w-full h-full relative overflow-hidden flex items-center justify-center"></div>
+
+                <!-- شارات المعلومات بالفيديو والدائرة المضيئة لتقدم التشغيل -->
+                <div id="video-progress-container" class="absolute top-3 left-3 hidden flex items-center space-x-2 space-x-reverse bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/20">
+                    <svg class="video-progress-ring w-5 h-5" viewBox="0 0 36 36">
+                        <circle class="text-white/20" stroke-width="4" stroke="currentColor" fill="transparent" r="14" cx="18" cy="18"/>
+                        <circle id="video-progress-circle" class="text-pink-500" stroke-width="4" stroke-dasharray="88" stroke-dashoffset="88" stroke-linecap="round" stroke="currentColor" fill="transparent" r="14" cx="18" cy="18"/>
+                    </svg>
+                    <span class="text-xs font-bold text-white/90">فيديو</span>
+                </div>
+
+                <div id="image-type-badge" class="absolute top-3 left-3 bg-black/50 backdrop-blur-md px-3 py-1 rounded-lg text-xs font-semibold text-white/80 border border-white/10 flex items-center gap-1.5">
+                    <i class="fas fa-image text-pink-300"></i>
+                    <span>صورة</span>
+                </div>
+            </div>
+
+            <!-- مكان كارت الرسائل القصيرة أسفل الصور -->
+            <div class="mt-4 p-4 rounded-xl bg-black/40 border border-pink-400/20 backdrop-blur-md min-h-[85px] flex items-center justify-center text-center shadow-inner">
+                <p id="media-caption" class="text-sm sm:text-base font-medium text-pink-100 leading-relaxed"></p>
+            </div>
+
+            <!-- أزرار التنقل (السابق / التالي) -->
+            <div class="flex items-center justify-between mt-5 px-1 gap-4">
+                <button onclick="prevMemory()" class="glass-btn px-5 py-3 rounded-xl font-bold text-sm sm:text-base text-white flex items-center space-x-2 space-x-reverse flex-1 justify-center">
+                    <i class="fas fa-chevron-right"></i>
+                    <span>السابق</span>
+                </button>
+                <button onclick="nextMemory()" class="glass-btn px-5 py-3 rounded-xl font-bold text-sm sm:text-base text-white flex items-center space-x-2 space-x-reverse flex-1 justify-center">
+                    <span>التالي</span>
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- 5. شاشة النهاية والاحتفال الكبير (Finale Screen) -->
+        <section id="finale-screen" class="glass-card p-8 sm:p-12 text-center hidden transition-all duration-700">
+            <div class="text-5xl sm:text-6xl mb-2 animate-bounce">🎂</div>
+            
+            <!-- حروف اسم Tina المضيئة بالنيون -->
+            <div class="my-4">
+                <h1 class="neon-tina text-6xl sm:text-8xl font-normal tracking-wide">Tina</h1>
+            </div>
+
+            <h2 id="finale-title" class="text-2xl sm:text-4xl font-black mb-4 text-transparent bg-clip-text bg-gradient-to-r from-yellow-200 via-pink-300 to-purple-200 drop-shadow-lg min-h-[48px]">
+                <!-- يتم كتابتها بتأثير الكتابة -->
+            </h2>
+
+            <div class="w-20 h-1 bg-gradient-to-r from-transparent via-pink-400 to-transparent mx-auto mb-6"></div>
+
+            <!-- الرسالة الختامية الخاطفة للأنفاس -->
+            <div class="bg-black/40 p-6 rounded-2xl border border-pink-400/20 mb-8 max-h-[280px] overflow-y-auto custom-scrollbar text-right">
+                <p id="finale-message-content" class="text-base sm:text-lg text-gray-100 leading-relaxed whitespace-pre-line font-normal">
+                    <!-- ... النص الختامي ... -->
+                </p>
+            </div>
+
+            <button onclick="restartJourney()" class="glass-btn px-8 py-4 rounded-2xl font-bold text-base sm:text-lg text-white shadow-2xl hover:scale-105 transition-all flex items-center justify-center space-x-2 space-x-reverse mx-auto">
+                <i class="fas fa-redo-alt"></i>
+                <span>إعادة مشاهدة الذكريات</span>
+            </button>
+        </section>
+
+    </main>
+
+    <script>
+        /* 
+           ========================================================================
+           تعديل البيانات بسهولة (DATA CONFIGURATION)
+           ========================================================================
+        */
+
+        // 1. كلمة السر
+        const CORRECT_PASSWORD = "182001";
+
+        // 2. نص الرسالة الأولى (تأثير الكتابة الحرفية - Typing Effect)
+        // يمكنك تعديل هذا النص بحرية وتغيير أسطره
+        const INTRO_LETTER_TEXT = `عزيزتي تينا ❤️...
+
+في هذا اليوم الخاص والمميز، أردتُ أن أقدم لكِ هذه الهدية المجهزة بكل حب واهتمام، لتذكركِ دائماً كم أنتِ شخـص نادر واستثنائي في حياتنا.
+
+شكراً لكل لحظة ضحكنا فيها سوا، ولكل موقف أثبتِ فيه جمال روحك وطيبة قلبك النقي.
+
+أتمنى لكِ عاماً مبهراً تشبهين حلاوته، وأن تحققي فيه كل ما تتمنينه وأكثر بكثير ✨.
+
+دعيني آخذكِ الآن في رحلة ساحرة عبر ذكرياتنا الجميلة معاً... 💌`;
+
+        // 3. النص الختامي في الشاشة الأخيرة (قابل للتعديل)
+        const FINALE_MESSAGE_TEXT = `كل سنة وأنتِ طيبة وبألف خير يا أحلى تينا في الدنيا! 🎉✨
+
+نتمنى لكِ سنة جديدة مليئة بالنجاح، وراحة البال، والضحكات التي لا تنتهي.
+شكراً لأنكِ مصدر ضياء وبهجة دائم لكل من حولك.
+
+دمتِ لنا أخت وصديقة غالية لا تعوّض أبداً! ❤️🎈`;
+
+        // 4. مصفوفة معرض الذكريات الـ 34 عنصرًا (32 صورة + 2 فيديو)
+        // ضع جميع صورك في مجلد images/ باسم photo1.jpg حتى photo32.jpg
+        // وفيديوهاتك في مجلد videos/ باسم video1.mp4 و video2.mp4
+        const MEMORIES_LIST = [
+            // 1
+            { type: 'image', src: 'images/photo1.jpg', fallback: 'https://images.unsplash.com/photo-1513151233558-d860c5398176?w=1000&auto=format&fit=crop', caption: 'كل سنة وأنتِ أجمل حاجة حصلت في حياتي ❤️' },
+            // 2
+            { type: 'image', src: 'images/photo2.jpg', fallback: 'https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=1000&auto=format&fit=crop', caption: 'وجودك بيخلي أي يوم عادي يبقى مميز.' },
+            // 3
+            { type: 'image', src: 'images/photo3.jpg', fallback: 'https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=1000&auto=format&fit=crop', caption: 'كل ذكرى معاكي ليها مكان خاص في قلبي.' },
+            // 4 (فيديو أول)
+            { type: 'video', src: 'videos/video1.mp4', fallback: 'https://assets.mixkit.co/videos/preview/mixkit-sparkler-held-by-a-girl-at-night-42884-large.mp4', caption: 'أجمل لحظة في الفيديو الأول ❤️' },
+            // 5
+            { type: 'image', src: 'images/photo4.jpg', fallback: 'https://images.unsplash.com/photo-1527529482837-4698179dc6ce?w=1000&auto=format&fit=crop', caption: 'ضحكتك هي أجمل موسيقى سمعتها.' },
+            // 6
+            { type: 'image', src: 'images/photo5.jpg', fallback: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=1000&auto=format&fit=crop', caption: 'أتمنى أشوفك سعيدة طول العمر.' },
+            // 7
+            { type: 'image', src: 'images/photo6.jpg', fallback: 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=1000&auto=format&fit=crop', caption: 'ربنا يديم وجودك في حياتي.' },
+            // 8
+            { type: 'image', src: 'images/photo7.jpg', fallback: 'https://images.unsplash.com/photo-1513201099705-a9746e1e201f?w=1000&auto=format&fit=crop', caption: 'الأيام الحلوة ليها طعم مختلف لما تكوني فيها.' },
+            // 9
+            { type: 'image', src: 'images/photo8.jpg', fallback: 'https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=1000&auto=format&fit=crop', caption: 'مهما مرت الأيام هتفضلي الأغلى.' },
+            // 10
+            { type: 'image', src: 'images/photo9.jpg', fallback: 'https://images.unsplash.com/photo-1520854221256-17451cc331bf?w=1000&auto=format&fit=crop', caption: 'كل لحظة معاكي تستحق تتحفظ للأبد.' },
+            // 11
+            { type: 'image', src: 'images/photo10.jpg', fallback: 'https://images.unsplash.com/photo-1531747056595-07f6cbbe10ad?w=1000&auto=format&fit=crop', caption: 'عيد ميلاد سعيد يا أجمل إنسانة.' },
+            // 12
+            { type: 'image', src: 'images/photo11.jpg', fallback: 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=1000&auto=format&fit=crop', caption: 'أتمنى كل أحلامك تتحقق.' },
+            // 13
+            { type: 'image', src: 'images/photo12.jpg', fallback: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=1000&auto=format&fit=crop', caption: 'ربنا يحفظك ويحققلك كل اللي نفسك فيه.' },
+            // 14
+            { type: 'image', src: 'images/photo13.jpg', fallback: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1000&auto=format&fit=crop', caption: 'شكراً على كل لحظة جميلة جمعِتنا.' },
+            // 15
+            { type: 'image', src: 'images/photo14.jpg', fallback: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=1000&auto=format&fit=crop', caption: 'كل سنة وقلبك مليان فرحة.' },
+            // 16
+            { type: 'image', src: 'images/photo15.jpg', fallback: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=1000&auto=format&fit=crop', caption: 'بحب أشوف ابتسامتك.' },
+            // 17
+            { type: 'image', src: 'images/photo16.jpg', fallback: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=1000&auto=format&fit=crop', caption: 'وجودك نعمة كبيرة.' },
+            // 18
+            { type: 'image', src: 'images/photo17.jpg', fallback: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=1000&auto=format&fit=crop', caption: 'أجمل صدفة حصلتلي.' },
+            // 19
+            { type: 'image', src: 'images/photo18.jpg', fallback: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=1000&auto=format&fit=crop', caption: 'كل صورة هنا وراها ذكرى بحبها.' },
+            // 20
+            { type: 'image', src: 'images/photo19.jpg', fallback: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1000&auto=format&fit=crop', caption: 'نفسي أفضل أعملك ذكريات حلوة.' },
+            // 21
+            { type: 'image', src: 'images/photo20.jpg', fallback: 'https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?w=1000&auto=format&fit=crop', caption: 'ربنا يكتبلك السعادة دايمًا.' },
+            // 22
+            { type: 'image', src: 'images/photo21.jpg', fallback: 'https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?w=1000&auto=format&fit=crop', caption: 'مفيش كلام يوصف مكانتك عندي.' },
+            // 23
+            { type: 'image', src: 'images/photo22.jpg', fallback: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=1000&auto=format&fit=crop', caption: 'كل سنة وإنتِ أقرب لقلبي.' },
+            // 24
+            { type: 'image', src: 'images/photo23.jpg', fallback: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=1000&auto=format&fit=crop', caption: 'أتمنى العمر كله يكون مليان ضحك.' },
+            // 25
+            { type: 'image', src: 'images/photo24.jpg', fallback: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=1000&auto=format&fit=crop', caption: 'أنا ممتن لكل لحظة قضيناها معًا.' },
+            // 26
+            { type: 'image', src: 'images/photo25.jpg', fallback: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=1000&auto=format&fit=crop', caption: 'مهما حصل هتفضلي مميزة.' },
+            // 27
+            { type: 'image', src: 'images/photo26.jpg', fallback: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=1000&auto=format&fit=crop', caption: 'ربنا يديم محبتنا.' },
+            // 28
+            { type: 'image', src: 'images/photo27.jpg', fallback: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=1000&auto=format&fit=crop', caption: 'كل سنة وأنتِ بخير يا تينا.' },
+            // 29
+            { type: 'image', src: 'images/photo28.jpg', fallback: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=1000&auto=format&fit=crop', caption: 'أتمنى تشوفي نفسك بعيني.' },
+            // 30
+            { type: 'image', src: 'images/photo29.jpg', fallback: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=1000&auto=format&fit=crop', caption: 'أجمل هدية هي وجودك.' },
+            // 31
+            { type: 'image', src: 'images/photo30.jpg', fallback: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=1000&auto=format&fit=crop', caption: 'ربنا يخليكي ليا.' },
+            // 32
+            { type: 'image', src: 'images/photo31.jpg', fallback: 'https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?w=1000&auto=format&fit=crop', caption: 'وقطع يوناثان وداود عهدًا لأنه أحبه كنفسه.\n(1 صموئيل 18:3)' },
+            // 33 (فيديو ثاني)
+            { type: 'video', src: 'videos/video2.mp4', fallback: 'https://assets.mixkit.co/videos/preview/mixkit-friends-with-sparklers-at-a-party-41551-large.mp4', caption: 'ذكرى جميلة هتفضل في القلب ❤️' },
+            // 34
+            { type: 'image', src: 'images/photo32.jpg', fallback: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=1000&auto=format&fit=crop', caption: 'Happy Birthday My Beautiful Tina ❤️' }
+        ];
+
+        // مصفوفة حركات الانتقال الـ 11 لتغيير الصور بأسلوب متنوع
+        const ANIMATIONS_POOL = [
+            'anim-slide-left', 'anim-slide-right', 'anim-slide-up', 'anim-slide-down',
+            'anim-zoom-in', 'anim-zoom-out', 'anim-fade', 'anim-rotate',
+            'anim-scale', 'anim-float', 'anim-bounce'
+        ];
+
+        let currentMemoryIndex = 0;
+        let audioPlayer = document.getElementById('bg-music');
+        let isAudioPlaying = false;
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        // عند تحميل الصفحة
+        window.addEventListener('load', () => {
+            initStarsCanvas();
+            initGlowCanvas();
+            createContinuousFloatingHearts();
+            preloadMediaAssets();
+
+            // 1. شاشة Loading المستمرة لمدة ثانيتين مع Fade Out سلس
+            setTimeout(() => {
+                const loadingScreen = document.getElementById('loading-screen');
+                loadingScreen.style.opacity = '0';
+                loadingScreen.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    loadingScreen.classList.add('hidden');
+                    const pwdScreen = document.getElementById('password-screen');
+                    pwdScreen.classList.remove('hidden');
+                    document.getElementById('password-input').focus();
+                }, 600);
+            }, 2000);
+
+            // تحديث عدد العناصر الكلي
+            document.getElementById('total-count').textContent = MEMORIES_LIST.length;
+            document.getElementById('finale-message-content').textContent = FINALE_MESSAGE_TEXT;
+        });
+
+        // Preload الصور للحصول على أداء فائق وسريع
+        function preloadMediaAssets() {
+            MEMORIES_LIST.forEach((item) => {
+                if (item.type === 'image') {
+                    const img = new Image();
+                    img.src = item.src;
+                }
+            });
+        }
+
+        // 2. التحقق من كلمة المرور
+        function checkPassword() {
+            const input = document.getElementById('password-input');
+            const errorMsg = document.getElementById('password-error');
+            const val = input.value.trim();
+
+            if (val === CORRECT_PASSWORD) {
+                errorMsg.style.opacity = '0';
+                const pwdScreen = document.getElementById('password-screen');
+                pwdScreen.style.opacity = '0';
+                pwdScreen.style.transform = 'scale(0.95)';
+                
+                setTimeout(() => {
+                    pwdScreen.classList.add('hidden');
+                    const letterScreen = document.getElementById('letter-screen');
+                    letterScreen.classList.remove('hidden');
+                    startTypingEffect();
+                }, 500);
+            } else {
+                input.classList.add('shake-error');
+                errorMsg.textContent = 'الباسورد غير صحيح';
+                errorMsg.style.opacity = '1';
+
+                setTimeout(() => {
+                    input.classList.remove('shake-error');
+                }, 500);
+
+                setTimeout(() => {
+                    errorMsg.style.opacity = '0';
+                }, 2000);
+            }
+        }
+
+        // 3. تأثير الكتابة حرفًا حرفًا للرسالة الأولى
+        function startTypingEffect() {
+            const textEl = document.getElementById('typing-text');
+            const btnContainer = document.getElementById('letter-btn-container');
+            const container = document.getElementById('typing-container');
+            textEl.textContent = '';
+            let index = 0;
+
+            function typeChar() {
+                if (index < INTRO_LETTER_TEXT.length) {
+                    textEl.textContent += INTRO_LETTER_TEXT.charAt(index);
+                    index++;
+                    container.scrollTop = container.scrollHeight;
+                    setTimeout(typeChar, 38);
+                } else {
+                    textEl.classList.remove('typing-cursor');
+                    btnContainer.classList.remove('hidden');
+                }
+            }
+            typeChar();
+        }
+
+        // 4. عند الضغط على زر "💌 اضغطي هنا"
+        function startMemoriesJourney() {
+            playAudioSafely();
+
+            const letterScreen = document.getElementById('letter-screen');
+            letterScreen.style.opacity = '0';
+            setTimeout(() => {
+                letterScreen.classList.add('hidden');
+                document.getElementById('gallery-screen').classList.remove('hidden');
+                document.getElementById('music-control').classList.remove('hidden');
+                
+                renderMemoryItem(currentMemoryIndex);
+                setupSwipeGestures();
+            }, 500);
+        }
+
+        // رابط أغنية احتياطي آمن عبر الإنترنت في حال غياب الملف المحلي music/song.mp3
+        const FALLBACK_MUSIC_URL = "https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=happy-birthday-112328.mp3";
+
+        function playAudioSafely() {
+            if (!audioPlayer) return;
+
+            const playPromise = audioPlayer.play();
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    isAudioPlaying = true;
+                    updateMusicBtnIcon(true);
+                }).catch(err => {
+                    console.log("Local audio file not found or auto-play prevented, switching to fallback audio.");
+                    audioPlayer.src = FALLBACK_MUSIC_URL;
+                    audioPlayer.load();
+                    audioPlayer.play().then(() => {
+                        isAudioPlaying = true;
+                        updateMusicBtnIcon(true);
+                    }).catch(e => {
+                        console.log("Audio playback notice:", e.message);
+                        updateMusicBtnIcon(false);
+                    });
+                });
+            }
+        }
+
+        // زر التبديل العائم للموسيقى
+        const musicToggleBtn = document.getElementById('music-toggle-btn');
+        musicToggleBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (audioPlayer.paused) {
+                playAudioSafely();
+            } else {
+                audioPlayer.pause();
+                isAudioPlaying = false;
+                updateMusicBtnIcon(false);
+            }
+        });
+
+        function updateMusicBtnIcon(playing) {
+            const icon = musicToggleBtn.querySelector('i');
+            if (playing) {
+                icon.className = 'fas fa-music animate-spin';
+            } else {
+                icon.className = 'fas fa-volume-mute text-gray-400';
+            }
+        }
+
+        // 6 & 7 & 8. عرض عناصر معرض الذكريات مع تأثيرات Ken Burns وانتقالات متنوعة
+        function renderMemoryItem(index) {
+            const item = MEMORIES_LIST[index];
+            const mediaContainer = document.getElementById('media-container');
+            const captionEl = document.getElementById('media-caption');
+            const currentIndexEl = document.getElementById('current-index');
+            const videoProgressContainer = document.getElementById('video-progress-container');
+            const imageTypeBadge = document.getElementById('image-type-badge');
+
+            currentIndexEl.textContent = index + 1;
+            captionEl.textContent = item.caption;
+
+            // اختار حركة دخول عشوائية متنوعة من المصفوفة
+            const randomAnim = ANIMATIONS_POOL[index % ANIMATIONS_POOL.length];
+            // اختار نمط من Ken Burns للصور
+            const kenBurnsStyles = ['ken-burns-1', 'ken-burns-2', 'ken-burns-3'];
+            const randomKenBurns = kenBurnsStyles[index % kenBurnsStyles.length];
+
+            mediaContainer.innerHTML = '';
+
+            if (item.type === 'video') {
+                videoProgressContainer.classList.remove('hidden');
+                imageTypeBadge.classList.add('hidden');
+
+                const videoWrapper = document.createElement('div');
+                videoWrapper.className = `w-full h-full flex items-center justify-center ${randomAnim}`;
+
+                const video = document.createElement('video');
+                video.autoplay = true;
+                video.playsInline = true;
+                video.muted = true; // لضمان البدء التلقائي بدون قيود
+                video.className = 'w-full h-full object-cover rounded-xl';
+
+                video.onerror = () => {
+                    if (video.src !== item.fallback) {
+                        video.src = item.fallback;
+                        video.load();
+                        video.play().catch(e => console.log('Fallback video notice:', e.message));
+                    }
+                };
+
+                video.src = item.src;
+
+                // تحديث دائرة تقدم الفيديو الدائرية (Progress Ring)
+                const circle = document.getElementById('video-progress-circle');
+                const circumference = 2 * Math.PI * 14;
+
+                video.ontimeupdate = () => {
+                    if (video.duration) {
+                        const progress = video.currentTime / video.duration;
+                        const offset = circumference - (progress * circumference);
+                        circle.style.strokeDashoffset = offset;
+                    }
+                };
+
+                // الانتقال التلقائي للذكرى التالية بعد انتهاء الفيديو
+                video.onended = () => {
+                    nextMemory();
+                };
+
+                videoWrapper.appendChild(video);
+                mediaContainer.appendChild(videoWrapper);
+
+                const playPromise = video.play();
+                if (playPromise !== undefined) {
+                    playPromise.catch(e => {
+                        video.muted = true;
+                        video.play().catch(err => console.log('Video play notice:', err.message));
+                    });
+                }
+            } else {
+                videoProgressContainer.classList.add('hidden');
+                imageTypeBadge.classList.remove('hidden');
+
+                const imgWrapper = document.createElement('div');
+               imgWrapper.className = `w-full h-full relative rounded-xl ${randomAnim}`;
+
+                const img = document.createElement('img');
+                img.className = `w-full h-full object-contain rounded-xl ${randomKenBurns}`;
+                img.loading = 'lazy';
+                
+                img.onerror = () => {
+                    if (img.src !== item.fallback) {
+                        img.src = item.fallback;
+                    }
+                };
+
+                img.src = item.src;
+                img.alt = `ذكرى تينا ${index + 1}`;
+
+                imgWrapper.appendChild(img);
+                mediaContainer.appendChild(imgWrapper);
+            }
+        }
+
+        // التنقل بين الذكريات
+        function nextMemory() {
+            if (currentMemoryIndex < MEMORIES_LIST.length - 1) {
+                currentMemoryIndex++;
+                renderMemoryItem(currentMemoryIndex);
+            } else {
+                showFinaleScreen();
+            }
+        }
+
+        function prevMemory() {
+            if (currentMemoryIndex > 0) {
+                currentMemoryIndex--;
+                renderMemoryItem(currentMemoryIndex);
+            }
+        }
+
+        // دعم إيماءات السحب (Swipe) على الهواتف والتابلت
+        function setupSwipeGestures() {
+            const viewport = document.getElementById('media-viewport');
+
+            viewport.addEventListener('touchstart', e => {
+                touchStartX = e.changedTouches[0].screenX;
+            }, { passive: true });
+
+            viewport.addEventListener('touchend', e => {
+                touchEndX = e.changedTouches[0].screenX;
+                handleSwipeGesture();
+            }, { passive: true });
+        }
+
+        function handleSwipeGesture() {
+            const diff = touchStartX - touchEndX;
+            if (Math.abs(diff) > 40) {
+                if (diff > 0) {
+                    // سحب لليسار -> التالي في اتجاه RTL
+                    prevMemory();
+                } else {
+                    // سحب لليمين -> السابق في اتجاه RTL
+                    nextMemory();
+                }
+            }
+        }
+
+        // 12. عند الضغط في أي مكان على الشاشة تظهر قلوب صغيرة
+        document.addEventListener('click', (e) => {
+            createClickHeartsBurst(e.clientX, e.clientY);
+        });
+
+        function createClickHeartsBurst(x, y) {
+            const heartCount = 4;
+            const symbols = ['❤️', '💖', '✨', '💕', '🌸'];
+
+            for (let i = 0; i < heartCount; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'click-heart';
+                heart.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+                
+                // تشتيت خفيف في الموقع
+                const offsetX = (Math.random() - 0.5) * 30;
+                const offsetY = (Math.random() - 0.5) * 30;
+                heart.style.left = `${x + offsetX}px`;
+                heart.style.top = `${y + offsetY}px`;
+
+                document.body.appendChild(heart);
+
+                setTimeout(() => {
+                    heart.remove();
+                }, 1200);
+            }
+        }
+
+        // 13. نهاية المعرض والاحتفال
+        function showFinaleScreen() {
+            document.getElementById('gallery-screen').classList.add('hidden');
+            const finaleScreen = document.getElementById('finale-screen');
+            finaleScreen.classList.remove('hidden');
+
+            startConfettiAndFireworks();
+            typeFinaleTitle();
+        }
+
+        function typeFinaleTitle() {
+            const titleEl = document.getElementById('finale-title');
+            const fullTitle = "Happy Birthday Tina ❤️";
+            titleEl.textContent = "";
+            let idx = 0;
+
+            function typeNext() {
+                if (idx < fullTitle.length) {
+                    titleEl.textContent += fullTitle.charAt(idx);
+                    idx++;
+                    setTimeout(typeNext, 80);
+                }
+            }
+            typeNext();
+        }
+
+        function restartJourney() {
+            currentMemoryIndex = 0;
+            stopConfettiAndFireworks();
+            document.getElementById('finale-screen').classList.add('hidden');
+            document.getElementById('gallery-screen').classList.remove('hidden');
+            renderMemoryItem(currentMemoryIndex);
+        }
+
+        /* 
+           ========================================================================
+           مُحركات الخلفية والنجوم والقلوب المستمرة والكونفيتي (Pure Vanilla JS Canvas)
+           ========================================================================
+        */
+
+        // 1. خلفية النجوم المضيئة المتلألئة
+        function initStarsCanvas() {
+            const canvas = document.getElementById('stars-canvas');
+            const ctx = canvas.getContext('2d');
+            let width = canvas.width = window.innerWidth;
+            let height = canvas.height = window.innerHeight;
+
+            window.addEventListener('resize', () => {
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = window.innerHeight;
+            });
+
+            const stars = Array.from({ length: 110 }, () => ({
+                x: Math.random() * width,
+                y: Math.random() * height,
+                radius: Math.random() * 1.8 + 0.4,
+                alpha: Math.random(),
+                speed: Math.random() * 0.018 + 0.005
+            }));
+
+            function drawStars() {
+                ctx.clearRect(0, 0, width, height);
+                stars.forEach(star => {
+                    star.alpha += star.speed;
+                    if (star.alpha > 1 || star.alpha < 0) star.speed = -star.speed;
+
+                    ctx.beginPath();
+                    ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(255, 255, 255, ${Math.abs(star.alpha)})`;
+                    ctx.fill();
+                });
+                requestAnimationFrame(drawStars);
+            }
+            drawStars();
+        }
+
+        // 2. دوائر ضوئية شفافة متوهجة بالخلفية
+        function initGlowCanvas() {
+            const canvas = document.getElementById('glow-canvas');
+            const ctx = canvas.getContext('2d');
+            let width = canvas.width = window.innerWidth;
+            let height = canvas.height = window.innerHeight;
+
+            window.addEventListener('resize', () => {
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = window.innerHeight;
+            });
+
+            const orbs = [
+                { x: width * 0.2, y: height * 0.3, r: 180, color: 'rgba(255, 117, 140, 0.15)', dx: 0.3, dy: 0.2 },
+                { x: width * 0.8, y: height * 0.7, r: 220, color: 'rgba(164, 44, 106, 0.15)', dx: -0.2, dy: -0.3 },
+                { x: width * 0.5, y: height * 0.8, r: 160, color: 'rgba(255, 126, 179, 0.12)', dx: 0.2, dy: -0.2 }
+            ];
+
+            function drawGlow() {
+                ctx.clearRect(0, 0, width, height);
+                orbs.forEach(orb => {
+                    orb.x += orb.dx;
+                    orb.y += orb.dy;
+
+                    if (orb.x < 0 || orb.x > width) orb.dx = -orb.dx;
+                    if (orb.y < 0 || orb.y > height) orb.dy = -orb.dy;
+
+                    const grad = ctx.createRadialGradient(orb.x, orb.y, 10, orb.x, orb.y, orb.r);
+                    grad.addColorStop(0, orb.color);
+                    grad.addColorStop(1, 'rgba(0,0,0,0)');
+
+                    ctx.beginPath();
+                    ctx.arc(orb.x, orb.y, orb.r, 0, Math.PI * 2);
+                    ctx.fillStyle = grad;
+                    ctx.fill();
+                });
+                requestAnimationFrame(drawGlow);
+            }
+            drawGlow();
+        }
+
+        // 3. القلوب المتحركة باستمرار في الخلفية
+        function createContinuousFloatingHearts() {
+            const symbols = ['❤️', '💖', '💕', '💗', '🌸', '✨'];
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.className = 'floating-heart-bg';
+                heart.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+                heart.style.left = `${Math.random() * 96}vw`;
+                heart.style.fontSize = `${Math.random() * 16 + 12}px`;
+                heart.style.animationDuration = `${Math.random() * 4 + 7}s`;
+                document.body.appendChild(heart);
+
+                setTimeout(() => heart.remove(), 10000);
+            }, 1000);
+        }
+
+        // 4. محرك الألعاب النارية والكونفيتي النهائي
+        let confettiAnimationId = null;
+        function startConfettiAndFireworks() {
+            const canvas = document.getElementById('confetti-canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            const colors = ['#ff758c', '#ff7eb3', '#ffc107', '#28a745', '#17a2b8', '#ffffff', '#e83e8c', '#ffd700'];
+            const pieces = Array.from({ length: 140 }, () => ({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height - canvas.height,
+                size: Math.random() * 10 + 5,
+                color: colors[Math.floor(Math.random() * colors.length)],
+                speedY: Math.random() * 3.5 + 2,
+                speedX: Math.random() * 2 - 1,
+                rotation: Math.random() * 360,
+                rotSpeed: Math.random() * 6 - 3
+            }));
+
+            function animateConfetti() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                pieces.forEach(p => {
+                    p.y += p.speedY;
+                    p.x += p.speedX;
+                    p.rotation += p.rotSpeed;
+
+                    if (p.y > canvas.height) {
+                        p.y = -20;
+                        p.x = Math.random() * canvas.width;
+                    }
+
+                    ctx.save();
+                    ctx.translate(p.x, p.y);
+                    ctx.rotate((p.rotation * Math.PI) / 180);
+                    ctx.fillStyle = p.color;
+                    ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
+                    ctx.restore();
+                });
+                confettiAnimationId = requestAnimationFrame(animateConfetti);
+            }
+            animateConfetti();
+        }
+
+        function stopConfettiAndFireworks() {
+            if (confettiAnimationId) {
+                cancelAnimationFrame(confettiAnimationId);
+                const canvas = document.getElementById('confetti-canvas');
+                const ctx = canvas.getContext('2d');
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            }
+        }
+    </script>
+</body>
+</html>
